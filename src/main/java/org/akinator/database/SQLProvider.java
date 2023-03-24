@@ -1,9 +1,10 @@
 package org.akinator.database;
 
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.SneakyThrows;
 import org.akinator.Main;
 import org.akinator.database.repository.PersonRepository;
+import org.akinator.database.repository.QuestionRepository;
+import org.akinator.database.repository.TreeRepository;
 
 public class SQLProvider {
 
@@ -25,6 +26,12 @@ public class SQLProvider {
         main.getHikari().addDataSourceProperty("databaseName", "akinator_data");
         main.getHikari().addDataSourceProperty("user", "root");
         main.getHikari().addDataSourceProperty("password", "");
+
+        QuestionRepository questionRepository = new QuestionRepository();
+        questionRepository.create();
+
+        TreeRepository treeRepository = new TreeRepository();
+        treeRepository.create();
 
         PersonRepository personRepository = new PersonRepository();
         personRepository.create();

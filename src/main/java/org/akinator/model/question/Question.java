@@ -8,5 +8,6 @@ import lombok.Data;
 public class Question {
 
     private String text;
+    private Integer id;
 
 }

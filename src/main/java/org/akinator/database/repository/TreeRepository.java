@@ -18,7 +18,11 @@ public class TreeRepository implements DatabaseRepository {
 
     @Override
     public void delete() {
-
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("DELETE * FROM trees")) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
