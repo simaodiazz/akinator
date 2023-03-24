@@ -1,4 +1,4 @@
-package org.example;
+package org.akinator;
 
 public class Main {
 
