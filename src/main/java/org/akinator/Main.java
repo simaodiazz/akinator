@@ -41,6 +41,6 @@ public class Main implements Application {
 
     @Override
     public String getWebsite() {
-        return "https://github.simaodiazz.com";
+        return "https://github.com/simaodiazz";
     }
 }

@@ -5,11 +5,11 @@ import org.akinator.Main;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class PersonRepository implements DatabaseRepository {
+public class TreeRepository implements DatabaseRepository {
 
     @Override
     public void create() {
-        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `persons` (name VARCHAR(16) NOT NULL, questions LONGTEXT NOT NULL)")) {
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `trees` (name VARCHAR(16) NOT NULL, questions LONGTEXT NOT NULL)")) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
