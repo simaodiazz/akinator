@@ -1,32 +1,28 @@
 package org.akinator.database.repository;
 
+import lombok.SneakyThrows;
 import org.akinator.Main;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-public class QuestionRepository implements DatabaseRepository {
+public class QuestionRepository implements Repository {
+
+    private final Main main;
+
+    public QuestionRepository(Main main) {
+        this.main = main;
+    }
 
     @Override
+    @SneakyThrows
     public void create() {
-        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `persons` (name VARCHAR(16) NOT NULL, id INT NOT NULL, questions LONGTEXT NOT NULL)")) {
+        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS questions (id INT, question VARCHAR(128))")) {
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void delete() {
-        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("DELETE * FROM persons")) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Override
-    public void recreate() {
-        DatabaseRepository.super.recreate();
     }
 }

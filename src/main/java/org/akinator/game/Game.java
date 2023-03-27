@@ -1,5 +1,8 @@
 package org.akinator.game;
 
-public class Game {
+public interface Game {
+
+    void start();
+    void stop();
 
 }

@@ -1,10 +1,14 @@
 package org.akinator.database.dao;
 
+import lombok.SneakyThrows;
 import org.akinator.Main;
 import org.akinator.database.adapter.PersonAdapter;
 import org.akinator.model.person.Person;
+import org.akinator.model.question.parser.QuestionParser;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -12,49 +16,64 @@ import java.util.concurrent.CompletableFuture;
 public class PersonDatabase implements PersonDatabaseService {
 
     @Override
-    public CompletableFuture<Boolean> contains(String personName) {
-        CompletableFuture.supplyAsync( () -> {
-            try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT playerName FROM persons WHERE name=?")) {
-                preparedStatement.setString(1, personName);
-                return preparedStatement.executeQuery().next();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        return null;
-    }
-
-    @Override
-    public CompletableFuture<Person> find(String playerName) {
-        CompletableFuture.supplyAsync( () -> {
+    public CompletableFuture<Person> find(String personName) {
+        CompletableFuture.supplyAsync(() -> {
             try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM persons WHERE name=?")) {
-                preparedStatement.setString(1, playerName);
-                PersonAdapter personAdapter = new PersonAdapter();
-                return personAdapter.adapt(preparedStatement.executeQuery());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                preparedStatement.setString(1, personName);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (!resultSet.next()) {
+                    PersonAdapter personAdapter = new PersonAdapter();
+                    return personAdapter.adapt(resultSet);
+                }
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
+            return null;
         });
         return null;
     }
 
     @Override
     public CompletableFuture<HashMap<String, Person>> findAll() {
+        HashMap<String, Person> persons = new HashMap<>();
+        CompletableFuture.supplyAsync(() -> {
+            try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM persons")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                PersonAdapter personAdapter = new PersonAdapter();
+                while (resultSet.next()) {
+                    Person person = personAdapter.adapt(resultSet);
+                    persons.put(person.getName(), person);
+                }
+                return persons;
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+            return null;
+        });
         return null;
     }
 
     @Override
-    public CompletableFuture<Void> add(Person person) {
-        return null;
+    public void create(@NotNull Person person) {
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("INSERT INTO persons (name, questions) VALUES (?, ?)")) {
+            preparedStatement.setString(1, person.getName());
+            QuestionParser questionParser = new QuestionParser();
+            preparedStatement.setString(2, questionParser.parse(person.getQuestions()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
-    public CompletableFuture<Void> update(String personName) {
-        return null;
-    }
-
-    @Override
-    public CompletableFuture<Void> remove(String personName) {
-        return null;
+    public void update(@NotNull Person person) {
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("UPDATE persons SET questions=? WHERE name=?")) {
+            preparedStatement.setString(1, person.getName());
+            QuestionParser questionParser = new QuestionParser();
+            preparedStatement.setString(2, questionParser.parse(person.getQuestions()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 }

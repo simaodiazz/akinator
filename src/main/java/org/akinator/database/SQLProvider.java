@@ -1,39 +1,43 @@
 package org.akinator.database;
 
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.AllArgsConstructor;
 import org.akinator.Main;
 import org.akinator.database.repository.PersonRepository;
 import org.akinator.database.repository.QuestionRepository;
 import org.akinator.database.repository.TreeRepository;
 
+@AllArgsConstructor
 public class SQLProvider {
 
     private final Main main;
 
-    public SQLProvider(Main main) {
-        this.main = main;
-    }
-
     public void setup() {
 
-        HikariDataSource hikariDataSource = new HikariDataSource();
+        HikariDataSource hikari = new HikariDataSource();
 
-        main.setHikari(hikariDataSource);
+        hikari.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        hikari.setJdbcUrl("jdbc:mysql://localhost:3306/akinator");
+        hikari.setUsername("root");
+        hikari.setPassword("");
 
-        main.getHikari().setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        main.getHikari().addDataSourceProperty("serverName", "127.0.0.1");
-        main.getHikari().addDataSourceProperty("port", "3306");
-        main.getHikari().addDataSourceProperty("databaseName", "akinator_data");
-        main.getHikari().addDataSourceProperty("user", "root");
-        main.getHikari().addDataSourceProperty("password", "");
+        hikari.setAutoCommit(true);
+        hikari.addDataSourceProperty("characterEncoding", "utf8");
+        hikari.addDataSourceProperty("autoReconnect", "true");
+        hikari.addDataSourceProperty("cachePrepStmts", "true");
+        hikari.addDataSourceProperty("useServerPrepStmts", "true");
+        hikari.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        hikari.addDataSourceProperty("rewriteBatchedStatements", "true");
 
-        QuestionRepository questionRepository = new QuestionRepository();
+        Main.getInstance().setHikari(hikari);
+
+        PersonRepository personRepository = new PersonRepository(main);
+        personRepository.create();
+
+        QuestionRepository questionRepository = new QuestionRepository(main);
         questionRepository.create();
 
-        TreeRepository treeRepository = new TreeRepository();
+        TreeRepository treeRepository = new TreeRepository(main);
         treeRepository.create();
-
-        PersonRepository personRepository = new PersonRepository();
-        personRepository.create();
     }
 }

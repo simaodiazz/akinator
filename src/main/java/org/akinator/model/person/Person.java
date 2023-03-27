@@ -2,17 +2,16 @@ package org.akinator.model.person;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.akinator.model.question.Question;
+import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Person {
 
-    private String personName;
-
-    // Questões corretas
-    private Set<Question> questions;
+    private String name;
+    private ArrayList<Integer> questions;
 
 }

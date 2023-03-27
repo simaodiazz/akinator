@@ -1,32 +1,28 @@
 package org.akinator.database.repository;
 
+import lombok.SneakyThrows;
 import org.akinator.Main;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-public class TreeRepository implements DatabaseRepository {
+public class TreeRepository implements Repository {
+
+    private final Main main;
+
+    public TreeRepository(Main main) {
+        this.main = main;
+    }
 
     @Override
+    @SneakyThrows
     public void create() {
-        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `trees` (name VARCHAR(16) NOT NULL, questions LONGTEXT NOT NULL)")) {
+        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS trees (id INT, question VARCHAR(128))")) {
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void delete() {
-        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("DELETE * FROM trees")) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Override
-    public void recreate() {
-        DatabaseRepository.super.recreate();
     }
 }

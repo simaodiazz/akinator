@@ -1,8 +1,8 @@
 package org.akinator;
 
-public interface Parser<Object, Data> {
+public interface Parser<O, D> {
 
-    Data parse(Object object);
-    Object unparse(Data data);
+    D parse(O object);
+    O unparse(D data);
 
 }

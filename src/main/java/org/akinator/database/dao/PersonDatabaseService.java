@@ -7,11 +7,9 @@ import java.util.concurrent.CompletableFuture;
 
 public interface PersonDatabaseService {
 
-    CompletableFuture<Boolean> contains(String personName);
-    CompletableFuture<Person> find(String playerName);
+    CompletableFuture<Person> find(String personName);
     CompletableFuture<HashMap<String, Person>> findAll();
-    CompletableFuture<Void> add(Person person);
-    CompletableFuture<Void> update(String personName);
-    CompletableFuture<Void> remove(String personName);
+    void create(Person person);
+    void update(Person person);
 
 }
