@@ -1,7 +1,8 @@
-package org.akinator.database.repository;
+package org.akinator.model.person.repository;
 
 import lombok.SneakyThrows;
 import org.akinator.Main;
+import org.akinator.database.repository.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

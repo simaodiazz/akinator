@@ -1,4 +1,4 @@
-package org.akinator.database.dao;
+package org.akinator.model.question.dao;
 
 import org.akinator.model.question.Question;
 

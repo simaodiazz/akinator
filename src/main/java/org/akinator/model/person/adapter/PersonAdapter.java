@@ -1,6 +1,7 @@
-package org.akinator.database.adapter;
+package org.akinator.model.person.adapter;
 
 import lombok.SneakyThrows;
+import org.akinator.database.adapter.Adapter;
 import org.akinator.model.person.Person;
 import org.akinator.model.question.parser.QuestionParser;
 

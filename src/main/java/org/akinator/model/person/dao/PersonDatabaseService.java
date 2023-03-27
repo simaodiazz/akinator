@@ -1,4 +1,4 @@
-package org.akinator.database.dao;
+package org.akinator.model.person.dao;
 
 import org.akinator.model.person.Person;
 

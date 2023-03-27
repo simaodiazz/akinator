@@ -1,7 +1,7 @@
-package org.akinator.database.dao;
+package org.akinator.model.question.dao;
 
 import org.akinator.Main;
-import org.akinator.database.adapter.QuestionAdapter;
+import org.akinator.model.question.adapter.QuestionAdapter;
 import org.akinator.model.question.Question;
 
 import java.sql.PreparedStatement;
@@ -32,6 +32,21 @@ public class QuestionDatabase implements QuestionDatabaseService {
 
     @Override
     public CompletableFuture<HashMap<Integer, Question>> findAll() {
+        HashMap<Integer, Question> persons = new HashMap<>();
+        CompletableFuture.supplyAsync(() -> {
+            try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM persons")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                QuestionAdapter questionAdapter = new QuestionAdapter();
+                while (resultSet.next()) {
+                    Question question = questionAdapter.adapt(resultSet);
+                    persons.put(question.getId(), question);
+                }
+                return persons;
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+            return null;
+        });
         return null;
     }
 

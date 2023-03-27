@@ -3,9 +3,9 @@ package org.akinator.database;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.AllArgsConstructor;
 import org.akinator.Main;
-import org.akinator.database.repository.PersonRepository;
-import org.akinator.database.repository.QuestionRepository;
-import org.akinator.database.repository.TreeRepository;
+import org.akinator.model.person.repository.PersonRepository;
+import org.akinator.model.question.repository.QuestionRepository;
+import org.akinator.model.tree.repository.TreeRepository;
 
 @AllArgsConstructor
 public class SQLProvider {

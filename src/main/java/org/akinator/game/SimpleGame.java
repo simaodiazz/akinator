@@ -2,9 +2,9 @@ package org.akinator.game;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.akinator.database.dao.PersonDatabase;
-import org.akinator.database.dao.QuestionDatabase;
-import org.akinator.database.dao.TreeDatabase;
+import org.akinator.model.person.dao.PersonDatabase;
+import org.akinator.model.question.dao.QuestionDatabase;
+import org.akinator.model.tree.dao.TreeDatabase;
 import org.akinator.model.person.Person;
 import org.akinator.model.question.Question;
 import org.akinator.model.tree.Tree;

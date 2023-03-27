@@ -1,4 +1,4 @@
-package org.akinator.database.dao;
+package org.akinator.model.tree.dao;
 
 import org.akinator.model.tree.Tree;
 

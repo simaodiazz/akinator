@@ -1,13 +1,14 @@
-package org.akinator.database.adapter;
+package org.akinator.model.tree.adapter;
 
 import lombok.SneakyThrows;
+import org.akinator.database.adapter.Adapter;
 import org.akinator.model.question.parser.QuestionParser;
 import org.akinator.model.tree.Tree;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class TreeRepository implements Adapter<Tree> {
+public class TreeAdapter implements Adapter<Tree> {
 
     @Override
     @SneakyThrows

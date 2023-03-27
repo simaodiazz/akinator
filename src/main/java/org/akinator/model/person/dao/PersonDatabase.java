@@ -1,8 +1,7 @@
-package org.akinator.database.dao;
+package org.akinator.model.person.dao;
 
-import lombok.SneakyThrows;
 import org.akinator.Main;
-import org.akinator.database.adapter.PersonAdapter;
+import org.akinator.model.person.adapter.PersonAdapter;
 import org.akinator.model.person.Person;
 import org.akinator.model.question.parser.QuestionParser;
 import org.jetbrains.annotations.NotNull;
