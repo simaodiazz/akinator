@@ -17,7 +17,7 @@ public class TreeRepository implements Repository {
     @Override
     @SneakyThrows
     public void create() {
-        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS trees (id INT, question VARCHAR(128))")) {
+        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS trees (id INT, questions VARCHAR(128))")) {
             preparedStatement.executeUpdate();
         }
     }

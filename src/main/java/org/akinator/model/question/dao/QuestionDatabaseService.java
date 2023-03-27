@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public interface QuestionDatabaseService {
 
     CompletableFuture<Question> find(Integer id);
-    CompletableFuture<HashMap<Integer, Question>> findAll();
+    HashMap<Integer, Question> findAll();
     void create(Question question);
     void update(Question question);
 

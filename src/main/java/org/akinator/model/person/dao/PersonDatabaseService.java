@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public interface PersonDatabaseService {
 
     CompletableFuture<Person> find(String personName);
-    CompletableFuture<HashMap<String, Person>> findAll();
+    HashMap<String, Person> findAll();
     void create(Person person);
     void update(Person person);
 

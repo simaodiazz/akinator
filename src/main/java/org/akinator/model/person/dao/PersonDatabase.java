@@ -33,9 +33,9 @@ public class PersonDatabase implements PersonDatabaseService {
     }
 
     @Override
-    public CompletableFuture<HashMap<String, Person>> findAll() {
+    public HashMap<String, Person> findAll() {
         HashMap<String, Person> persons = new HashMap<>();
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<HashMap<String, Person>> future = CompletableFuture.supplyAsync(() -> {
             try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM persons")) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 PersonAdapter personAdapter = new PersonAdapter();
@@ -49,7 +49,7 @@ public class PersonDatabase implements PersonDatabaseService {
             }
             return null;
         });
-        return null;
+        return future.join();
     }
 
     @Override

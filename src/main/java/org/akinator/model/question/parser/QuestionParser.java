@@ -10,16 +10,16 @@ public class QuestionParser implements Parser<ArrayList<Integer>, String> {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i = 0; i <= questions.size(); i++) {
+        for (int i = 0; i < questions.size(); i++) {
 
             int question = questions.get(i);
 
-            if (i == questions.size()) {
+            if (i == questions.size() - 1) {
                 stringBuilder.append(question);
+            } else {
+                stringBuilder.append(question);
+                stringBuilder.append(":");
             }
-
-            stringBuilder.append(question);
-            stringBuilder.append(":");
         }
 
         return stringBuilder.toString();

@@ -17,7 +17,7 @@ public class QuestionRepository implements Repository {
     @Override
     @SneakyThrows
     public void create() {
-        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS questions (id INT, question VARCHAR(128))")) {
+        try (PreparedStatement preparedStatement = main.getHikari().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS questions (id INT, text VARCHAR(128))")) {
             preparedStatement.executeUpdate();
         }
     }

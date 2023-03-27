@@ -17,7 +17,7 @@ public class PersonAdapter implements Adapter<Person> {
         QuestionParser questionParser = new QuestionParser();
 
         String name = resultSet.getString("name");
-        String questions = resultSet.getString("data");
+        String questions = resultSet.getString("questions");
 
         person.setName(name);
         person.setQuestions(questionParser.unparse(questions));

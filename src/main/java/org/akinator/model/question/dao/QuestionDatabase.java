@@ -1,8 +1,8 @@
 package org.akinator.model.question.dao;
 
 import org.akinator.Main;
-import org.akinator.model.question.adapter.QuestionAdapter;
 import org.akinator.model.question.Question;
+import org.akinator.model.question.adapter.QuestionAdapter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,32 +31,44 @@ public class QuestionDatabase implements QuestionDatabaseService {
     }
 
     @Override
-    public CompletableFuture<HashMap<Integer, Question>> findAll() {
-        HashMap<Integer, Question> persons = new HashMap<>();
-        CompletableFuture.supplyAsync(() -> {
-            try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM persons")) {
+    public HashMap<Integer, Question> findAll() {
+        HashMap<Integer, Question> questions = new HashMap<>();
+        CompletableFuture<HashMap<Integer, Question>> future = CompletableFuture.supplyAsync(() -> {
+            try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("SELECT * FROM questions")) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 QuestionAdapter questionAdapter = new QuestionAdapter();
                 while (resultSet.next()) {
                     Question question = questionAdapter.adapt(resultSet);
-                    persons.put(question.getId(), question);
+                    questions.put(question.getId(), question);
                 }
-                return persons;
+                return questions;
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
             return null;
         });
-        return null;
+        return future.join();
     }
 
     @Override
-    public void create(Question person) {
-
+    public void create(Question question) {
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("INSERT INTO questions (id, text) VALUES (?, ?)")) {
+            preparedStatement.setInt(1, question.getId());
+            preparedStatement.setString(2, question.getText());
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
-    public void update(Question person) {
-
+    public void update(Question question) {
+        try (PreparedStatement preparedStatement = Main.getInstance().getHikari().getConnection().prepareStatement("UPDATE questions SET text=? WHERE id=?")) {
+            preparedStatement.setString(1, question.getText());
+            preparedStatement.setInt(2, question.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 }

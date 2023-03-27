@@ -8,8 +8,8 @@ import java.util.concurrent.CompletableFuture;
 public interface TreeDatabaseService {
 
     CompletableFuture<Tree> find(Integer id);
-    CompletableFuture<HashMap<Integer, Tree>> findAll();
-    void create(String treeName);
-    void update(String treeName);
+    HashMap<Integer, Tree> findAll();
+    void create(Tree tree);
+    void update(Tree tree);
 
 }
