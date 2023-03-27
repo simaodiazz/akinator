@@ -127,6 +127,7 @@ public class SimpleGame implements Game {
 
         } else if (persons.size() == 0) {
             System.out.println("Seu personagem é o zé ninguém.");
+            return;
         }
 
         this.random();

@@ -5,7 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.akinator.database.SQLProvider;
 import org.akinator.game.SimpleGame;
+import org.akinator.model.person.Person;
+import org.akinator.model.person.dao.PersonDatabase;
+import org.akinator.model.tree.Tree;
+import org.akinator.model.tree.dao.TreeDatabase;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main implements Application {
@@ -55,9 +60,6 @@ public class Main implements Application {
         System.out.println(" ");
         System.out.println("\u001B[93m/no.\u001B[0m");
         System.out.println("    Responder que a pergunta é incorreta.");
-        System.out.println(" ");
-        System.out.println("\u001B[93m/idk.\u001B[0m");
-        System.out.println("    Responder que não sei se a pergunta é verdadeira ou falsa.");
         System.out.println(" ");
 
         while (running) {
